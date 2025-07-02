@@ -64,7 +64,7 @@ npm run dev
 
 4. **Open the app**
 
-Go to your browser and open: http://localhost:3000
+Go to your browser and open: http://localhost:5173/
 
 ---
 
