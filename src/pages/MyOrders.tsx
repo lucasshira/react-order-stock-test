@@ -42,6 +42,7 @@ export default function MyOrders() {
     alert(`📧 Email sent to ${email} with the following completed orders:\n\n${summary}`)
   }
 
+  if (!userId) return <div>You must be logged in to view this page.</div>;
   if (loading) return <div>Loading orders...</div>;
 
   return (

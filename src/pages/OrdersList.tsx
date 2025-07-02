@@ -30,7 +30,7 @@ export default function OrdersList() {
   }, [])
 
   async function addOrder(itemId: string) {
-    if (!itemId) {
+    if (!userId) {
       alert("You need to log in to add products.")
       return
     }
