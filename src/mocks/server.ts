@@ -69,7 +69,10 @@ export function makeServer() {
       this.namespace = "api";
 
       this.get("/orders", (schema) => {
-        return { orders: schema.orders.all().models.map((m: any) => m.attrs) };
+        return { 
+          orders: schema.orders.all().models.map((m: any) => m.attrs),
+          items: schema.items.all(),
+        };
       });
 
       this.post("/orders", (schema, request) => {
@@ -87,7 +90,12 @@ export function makeServer() {
           return new Response(400, {}, { error: "Stock unavailable for this item." });
         }
 
-        let order = schema.orders.findBy({ itemId: attrs.itemId, userId: attrs.userId });
+        let order = schema.orders.all().models.find((order: any) => {
+          return (
+            order.attrs.itemId === attrs.itemId &&
+            String(order.attrs.userId) === String(attrs.userId)
+          );
+        });
 
         let status: Order["status"];
         let fulfilledQty = 0;
@@ -120,7 +128,11 @@ export function makeServer() {
           });
         }
 
-        return order;
+        return {
+          order,
+          orders: schema.orders.all().models.map((m: any) => m.attrs),
+          items: schema.items.all()
+        };
       });
 
       this.get("/my-orders", (schema, request) => {

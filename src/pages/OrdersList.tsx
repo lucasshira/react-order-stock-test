@@ -5,12 +5,14 @@ import type { Order } from "../types/order";
 import { useNavigate } from "react-router-dom";
 
 import styles from "./OrdersList.module.css";
+import type { Item } from "../types/item";
 
 export default function OrdersList() {
   const userId = useUserStore((state) => state.id)
   const navigate = useNavigate()
 
-  const [orders, setOrders] = useState<Order[]>([])
+  const [, setOrders] = useState<Order[]>([])
+  const [items, setItems] = useState<Item[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -19,6 +21,7 @@ export default function OrdersList() {
       try {
         const response = await axios.get('/api/orders')
         setOrders(response.data.orders)
+        setItems(response.data.items.models)
       } catch (error) {
         setError(error.message)
       } finally {
@@ -42,8 +45,6 @@ export default function OrdersList() {
         userId
       })
       alert("Item added!")
-      const res = await axios.get('/api/orders');
-      setOrders(res.data.orders);
       navigate('/my-orders')
 
     } catch (error) {
@@ -65,10 +66,10 @@ export default function OrdersList() {
         <button onClick={() => navigate('/my-orders')}>My orders</button>
       </div>
       <ul>
-        {orders.map((order) => (
-          <li key={order.id}>
-            Item: {order.itemId} - Stock: {order.quantity}
-            <button onClick={() => addOrder(order.itemId)}>Add</button>
+        {items.map((item) => (
+          <li key={item.id}>
+            Item: {item.id} - Stock: {item.stock}
+            <button onClick={() => addOrder(item.id)}>Add</button>
           </li>
         ))}
       </ul>
