@@ -1,69 +1,76 @@
-# React + TypeScript + Vite
+# React Order Stock Test
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
 
-Currently, two official plugins are available:
+This is a frontend application built with React and TypeScript that manages client's orders.  
+When a logged user places an order, the system attempts to fulfill it immediately based on available stock. If the stock is insufficient, the order cannot be added to your order personal list.  
+Users receive notifications (simulated emails) when their orders are completed.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Login page that persists across all application pages with Zustand
+- List all orders with their current completion status (`pending`, `partial`, or `completed`)
+- Create new orders
+- List all items in stock
+- User feedback via alerts for important actions and errors
+- Basic navigation between orders and items views
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+## Technologies Used
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- React with TypeScript
+- MirageJS (mock API server)
+- Axios (for HTTP requests)
+- React Router (for routing)
+- React Hook Form
+- Zod
+- Zustand
+- CSS Modules for scoped styling
+
+---
+
+## Project Structure
+
+- /src/pages — Page views and routing
+- /src/store — Zustand global state management
+- /src/mocks — Axios API calls and mocks (MirageJS)
+- /src/types — TypeScript types and interfaces
+
+---
+
+## Setup & Run Instructions
+
+1. **Clone the repository**
+
+```bash
+git clone <your-repo-url>
+cd <your-repo-folder>
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2. **Install dependencies**
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
+
+3. **Start the development server**
+
+```bash
+npm run dev
+```
+
+4. **Open the app**
+
+Go to your browser and open: http://localhost:5173/
+
+---
+
+## Assumptions & Decisions
+
+The backend API is simulated with MirageJS within the frontend project — no real backend server is required.
+Orders are associated with users by userId managed via global state.
+User notifications are simulated via alert pop-ups.
+The UI is minimalistic, focusing on functional interactions rather than design details.
